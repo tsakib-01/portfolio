@@ -40,7 +40,7 @@ export default function Navbar() {
       </div>
       <div className="navbar-end gap-2">
         <a 
-          href="https://github.com/yourusername" 
+          href="https://github.com/tsakib-01/" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="btn btn-ghost btn-circle"

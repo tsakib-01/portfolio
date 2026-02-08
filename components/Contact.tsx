@@ -85,7 +85,7 @@ export default function Contact() {
                   <h4 className="text-white font-semibold mb-3">Follow Me</h4>
                   <div className="flex gap-4">
                     <a 
-                      href="https://github.com/yourusername" 
+                      href="https://github.com/tsakib-01/" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="btn btn-circle bg-white text-black hover:bg-gray-200"
@@ -93,7 +93,7 @@ export default function Contact() {
                       <FaGithub className="text-2xl" />
                     </a>
                     <a 
-                      href="https://linkedin.com/in/yourusername" 
+                      href="https://www.linkedin.com/in/tasnim-sakib/" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="btn btn-circle bg-white text-black hover:bg-gray-200"
