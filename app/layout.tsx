@@ -10,13 +10,23 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Tasnim Sakib - Full Stack Developer | SEO Specialist',
     description: 'Professional portfolio of Tasnim Sakib - Full Stack Developer and SEO Specialist',
-    images: ['/thumbnail.png'],
+    images: [
+      {
+        url: '/thumbnail.png',
+        width: 1200,
+        height: 630,
+        alt: 'Tasnim Sakib Portfolio',
+      }
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tasnim Sakib - Full Stack Developer | SEO Specialist',
     description: 'Professional portfolio of Tasnim Sakib - Full Stack Developer and SEO Specialist',
     images: ['/thumbnail.png'],
+  },
+  icons: {
+    icon: '/thumbnail.png',
   },
 }
 
@@ -27,9 +37,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dark">
-      <head>
-        <link rel="icon" href="/thumbnail.png" />
-      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
