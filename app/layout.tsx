@@ -4,9 +4,16 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Portfolio - Your Name',
-  description: 'Professional portfolio showcasing my work and skills',
+export const metadata = {
+  title: 'Tasnim Sakib - Portfolio',
+  description: 'Full Stack Developer Portfolio',
+  openGraph: {
+    images: ['/thumbnail.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/thumbnail.png'],
+  },
 }
 
 export default function RootLayout({
