@@ -5,28 +5,17 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Tasnim Sakib - Portfolio',
-  description: 'Full Stack Developer Portfolio',
+  title: 'Tasnim Sakib - Full Stack Developer | SEO Specialist',
+  description: 'Professional portfolio of Tasnim Sakib - Full Stack Developer and SEO Specialist showcasing projects, skills, and expertise',
   openGraph: {
-    title: 'Tasnim Sakib - Portfolio',
-    description: 'Full Stack Developer Portfolio',
-    url: 'https://your-domain.vercel.app',
-    siteName: 'Tasnim Sakib Portfolio',
-    images: [
-      {
-        url: '/thumbnail.png',
-        width: 1024,  // ← Changed
-        height: 1024, // ← Changed
-        alt: 'Tasnim Sakib Portfolio',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
+    title: 'Tasnim Sakib - Full Stack Developer | SEO Specialist',
+    description: 'Professional portfolio of Tasnim Sakib - Full Stack Developer and SEO Specialist',
+    images: ['/thumbnail.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tasnim Sakib - Portfolio',
-    description: 'Full Stack Developer Portfolio',
+    title: 'Tasnim Sakib - Full Stack Developer | SEO Specialist',
+    description: 'Professional portfolio of Tasnim Sakib - Full Stack Developer and SEO Specialist',
     images: ['/thumbnail.png'],
   },
 }
@@ -38,6 +27,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dark">
+      <head>
+        <link rel="icon" href="/thumbnail.png" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
