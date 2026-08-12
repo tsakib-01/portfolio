@@ -19,26 +19,39 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitStatus(null)
 
-    try {
-      await emailjs.send(
-        'YOUR_SERVICE_ID',      // From EmailJS dashboard
-        'YOUR_TEMPLATE_ID',     // From EmailJS dashboard
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        'YOUR_PUBLIC_KEY'       // From EmailJS dashboard
-      )
-      
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', message: '' })
-    } catch (error) {
-      console.error('Error:', error)
-      setSubmitStatus('error')
-    } finally {
-      setIsSubmitting(false)
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+
+    if (serviceId && templateId && publicKey && serviceId !== 'YOUR_SERVICE_ID') {
+      try {
+        await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+          },
+          publicKey
+        )
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        setIsSubmitting(false)
+        return
+      } catch (error) {
+        console.error('EmailJS Error:', error)
+      }
     }
+
+    // Direct mailto fallback to ensure messages reach tsakibxxx9111@gmail.com
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`)
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
+    window.location.href = `mailto:tsakibxxx9111@gmail.com?subject=${subject}&body=${body}`
+
+    setSubmitStatus('success')
+    setFormData({ name: '', email: '', message: '' })
+    setIsSubmitting(false)
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -64,7 +77,7 @@ export default function Contact() {
                   <span className="font-mono animate-blink">_</span>
                 </h3>
                 <p className="text-white mb-6">
-                  I enjoy discussing new projects and challenges. Please share as much info, as possible so we can get the most out of our first catch-up.
+                  I enjoy discussing new projects and challenges. Please share as much info as possible so we can get the most out of our first catch-up.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
@@ -76,8 +89,8 @@ export default function Contact() {
                   </div>
                   <div className="flex items-center gap-4">
                     <MdEmail className="text-2xl text-white" />
-                    <a href="mailto:noerrorsyntax@gmail.com" className="text-white hover:underline">
-                      noerrorsyntax@gmail.com
+                    <a href="mailto:tsakibxxx9111@gmail.com" className="text-white hover:underline">
+                      tsakibxxx9111@gmail.com
                     </a>
                   </div>
                 </div>
@@ -112,14 +125,14 @@ export default function Contact() {
               {submitStatus === 'success' && (
                 <div className="alert alert-success mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <span>Message sent successfully! I'll get back to you soon.</span>
+                  <span>Message action initiated! Opening mail client to send to tsakibxxx9111@gmail.com.</span>
                 </div>
               )}
               
               {submitStatus === 'error' && (
                 <div className="alert alert-error mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <span>Failed to send. Please try again or email me directly.</span>
+                  <span>Failed to send. Please email me directly at tsakibxxx9111@gmail.com.</span>
                 </div>
               )}
 
