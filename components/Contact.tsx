@@ -23,6 +23,7 @@ export default function Contact() {
     const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
 
+    // Try EmailJS if configured
     if (serviceId && templateId && publicKey && serviceId !== 'YOUR_SERVICE_ID') {
       try {
         await emailjs.send(
@@ -44,14 +45,35 @@ export default function Contact() {
       }
     }
 
-    // Direct mailto fallback to ensure messages reach tsakibxxx9111@gmail.com
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`)
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
-    window.location.href = `mailto:tsakibxxx9111@gmail.com?subject=${subject}&body=${body}`
+    // Background AJAX submission - sends email directly to tsakibxxx9111@gmail.com without any mailto app prompt or page redirect
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/tsakibxxx9111@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Message from ${formData.name}`,
+          _captcha: 'false'
+        })
+      })
 
-    setSubmitStatus('success')
-    setFormData({ name: '', email: '', message: '' })
-    setIsSubmitting(false)
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -125,7 +147,7 @@ export default function Contact() {
               {submitStatus === 'success' && (
                 <div className="alert alert-success mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <span>Message action initiated! Opening mail client to send to tsakibxxx9111@gmail.com.</span>
+                  <span>Message sent successfully! I'll get back to you soon.</span>
                 </div>
               )}
               
